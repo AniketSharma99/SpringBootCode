@@ -1,0 +1,30 @@
+server:
+  port: 8055
+
+spring:
+  application:
+    name: cart-service
+  data:
+    mongodb:
+      uri:  mongodb+srv://aniket:12345@cluster0.8u9y7.mongodb.net/cartDB?retryWrites=true&w=majority
+
+  profiles:
+    active: development
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      addToCart:
+        register-health-indicator: true
+        ring-buffer-size-in-closed-state: 5
+        wait-duration-in-open-state: 50s
+        failure-rate-threshold: 50
+        
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
